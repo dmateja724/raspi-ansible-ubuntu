@@ -32,6 +32,7 @@
         mode: 0644
     - name: Reboot after Enabling PoE+ Hat
       reboot:
+        reboot_timeout: 3600
     - name: Update Packages
       apt:
         update_cache: yes
@@ -45,3 +46,4 @@
         state: latest
     - name: Reboot after Initial Setup
       reboot:
+        reboot_timeout: 3600
