@@ -30,7 +30,14 @@
         owner: root
         group: root
         mode: 0644
-    - name: Reboot after Enabling PoE+ Hat
+    - name: Configure SSH
+      template:
+        src: sshd_config.j2
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0644
+    - name: Reboot after applying Templates
       reboot:
         reboot_timeout: 3600
     - name: Update Packages
