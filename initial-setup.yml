@@ -2,6 +2,22 @@
 - hosts: all
   become: true
   tasks:
+    - name: Update Packages
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+    - name: Upgrade all packages
+      apt:
+        upgrade: dist
+    - name: Install Raspberry Pi packages
+      apt:
+        name:
+          - libraspberrypi-bin
+          - raspi-config
+        state: latest
+    # - name: Reboot after Initial Package Download
+    #   reboot:
+    #     reboot_timeout: 3600
     - name: Enable PoE+ Hat for Raspberry Pi
       template:
         src: config.txt.j2
@@ -30,27 +46,13 @@
         owner: root
         group: root
         mode: 0644
-    - name: Configure SSH
-      template:
-        src: sshd_config.j2
-        dest: /etc/ssh/sshd_config
-        owner: root
-        group: root
-        mode: 0644
-    - name: Reboot after applying Templates
-      reboot:
-        reboot_timeout: 3600
-    - name: Update Packages
-      apt:
-        update_cache: yes
-        cache_valid_time: 3600
-    - name: Upgrade all packages
-      apt:
-        upgrade: dist
-    - name: Install Vim
-      apt:
-        name: vim
-        state: latest
+    # - name: Configure SSH
+    #   template:
+    #     src: sshd_config.j2
+    #     dest: /etc/ssh/sshd_config
+    #     owner: root
+    #     group: root
+    #     mode: 0644
     - name: Reboot after Initial Setup
       reboot:
         reboot_timeout: 3600
